@@ -85,16 +85,16 @@ if [ "$1" = '/opt/couchdb/bin/couchdb' ]; then
         if ! grep -Pzoqr '\[admins\]\n[^;]\w+' /opt/couchdb/etc/default.d/*.ini /opt/couchdb/etc/local.d/*.ini /opt/couchdb/etc/local.ini; then
 		# The - option suppresses leading tabs but *not* spaces. :)
 		cat >&2 <<-'EOWARN'
-			****************************************************
-			WARNING: CouchDB is running in Admin Party mode.
-			         This will allow anyone with access to the
-			         CouchDB port to access your database. In
-			         Docker's default configuration, this is
-			         effectively any other container on the same
-			         system.
-			         Use "-e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password"
-			         to set it in "docker run".
-			****************************************************
+		****************************************************
+		WARNING: CouchDB is running in Admin Party mode.
+					This will allow anyone with access to the
+					CouchDB port to access your database. In
+					Docker's default configuration, this is
+					effectively any other container on the same
+					system.
+					Use "-e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password"
+					to set it in "docker run".
+		****************************************************
 		EOWARN
 	fi
 

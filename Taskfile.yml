@@ -19,7 +19,7 @@ version: '3'
 
 vars:
   MODULES: controller runtimes operator cli config testing
-  BASETAG: 2.3.1-ubi
+  BASETAG: 2.3.1-morpheus
   IMAGE: nuvolaris/couchdb
   REPO: ghcr.io
   TAG:
@@ -28,6 +28,7 @@ vars:
 tasks:
 
   default: true
+  setup: true
 
   image-tag: 
     silent: true
@@ -44,3 +45,23 @@ tasks:
     cmds:
       - docker build {{.BASETAG}} -t {{.REPO}}/{{.IMAGE}}:{{.TAG}} {{.CLI_ARGS}}
 
+  push:
+    cmds:
+      - docker push {{.REPO}}/{{.IMAGE}}:{{.TAG}} {{.CLI_ARGS}}
+
+  run:
+    - >
+      docker run -p 5984:5984 -ti --name couchdb --rm
+      --entrypoint=/bin/sh
+      -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=pass -e NODENAME=couch0 
+      {{.REPO}}/{{.IMAGE}}:{{.TAG}} 
+
+  run-d:
+    - >
+      docker run -p 5984:5984 -d --name couchdb --rm
+      -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=pass -e NODENAME=couch0
+      {{.REPO}}/{{.IMAGE}}:{{.TAG}} 
+
+  kill: docker rm -f couchdb
+
+  rmi: docker rmi -f {{.REPO}}/{{.IMAGE}}:{{.TAG}} 
