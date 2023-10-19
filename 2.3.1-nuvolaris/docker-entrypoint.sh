@@ -48,4 +48,7 @@ cat >&2 <<-'EOWARN'
 	EOWARN
 fi
 
+if test -e /opt/couchdb/data/.erlang.cookie
+then chmod 400 /opt/couchdb/data/.erlang.cookie
+fi
 exec /opt/couchdb/bin/couchdb "$@"

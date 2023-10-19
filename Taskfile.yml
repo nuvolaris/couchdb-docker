@@ -19,7 +19,7 @@ version: '3'
 
 vars:
   MODULES: controller runtimes operator cli config testing
-  BASETAG: 2.3.1-morpheus
+  BASETAG: 2.3.1-nuvolaris
   IMAGE: nuvolaris/couchdb
   REPO: ghcr.io
   TAG:
